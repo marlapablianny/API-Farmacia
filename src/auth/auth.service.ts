@@ -8,7 +8,7 @@ export class AuthService {
         ) {}
 
     async validateAdministrador(email: string, password: string): Promise<any> {
-        const administrador = await this.administradorService.findOne(email);
+        const administrador = await this.administradorService.findOneByEmail(email);
         if(administrador && administrador.password == password) {
             const { password, ...rest } = administrador 
             return rest;

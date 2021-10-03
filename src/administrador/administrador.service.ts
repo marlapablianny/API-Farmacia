@@ -25,6 +25,10 @@ export class AdministradorService {
     return this.administradorRepository.findOne(id);
   }
 
+  findOneByEmail(email: string): Promise<Administrador>{
+    return this.administradorRepository.findOne({ where: { email } });
+  }
+
   async update(id: string, updateAdministradorDto: UpdateAdministradorDto) {
     await this.administradorRepository.update(id,updateAdministradorDto);
   }
