@@ -24,6 +24,10 @@ export class ClientesService {
     return this.clientesRepository.findOne(id);
   }
 
+  findOneByEmail(email: string): Promise<Cliente>{
+    return this.clientesRepository.findOne({ where: { email } });
+  }
+
   async update(id: string, updateClienteDto: UpdateClienteDto) {
     await this.clientesRepository.update(id,updateClienteDto);
   }
