@@ -14,7 +14,6 @@ export class PedidoService {
 
   create(createPedidoDto: CreatePedidoDto) {
     return this.pedidoRepository.save(createPedidoDto);
-    
   }
 
   findAll(): Promise<Pedido[]> {

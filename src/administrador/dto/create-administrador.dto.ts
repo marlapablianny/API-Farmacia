@@ -2,13 +2,13 @@ import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class CreateAdministradorDto {
   @IsNotEmpty()
-  readonly name: string;
+  readonly nome: string;
 
   @IsNotEmpty()
   readonly endereco: string;
 
   @IsNotEmpty()
-  readonly telephone: string;
+  readonly telefone: string;
 
   @IsEmail()
   readonly email: string;

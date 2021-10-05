@@ -6,13 +6,13 @@ export class Cliente {
     id: number;
   
     @Column('text')
-    name: string;
+    nome: string;
   
     @Column('text')
     endereco: string;
 
     @Column()
-    telephone: string;
+    telefone: string;
 
     @Column('text')
     email: string;

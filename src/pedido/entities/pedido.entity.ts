@@ -6,12 +6,16 @@ export class Pedido {
     id: number;
 
     @Column()
-    name: string;
+    nome: string;
 
     @Column()
     endereco: string;
 
     @Column()
     telefone: string;
+
+    @Column()
+    medicamento: string;
+
 
 }

@@ -6,7 +6,7 @@ export class Medicamento {
     id: number;
 
     @Column()
-    name_medicamento: string;
+    nome_medicamento: string;
 
     @Column()
     valor: string;
@@ -16,4 +16,5 @@ export class Medicamento {
 
     @Column()
     quantidade: string;
+
 }
