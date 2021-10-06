@@ -14,7 +14,7 @@ export class Cliente {
     @Column()
     telefone: string;
 
-    @Column()
+    @Column({unique: true})
     email: string;
 
     @Column('text')
