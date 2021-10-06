@@ -32,4 +32,9 @@ export class PedidoService {
     await this.pedidoRepository.delete(id);
     
   }
+
+  async Pedidorecebido(id, usuario){
+    return this.pedidoRepository.update({id: id,id_recebeu_pedido:null},{id_recebeu_pedido:usuario.id} )
+
+  }
 }

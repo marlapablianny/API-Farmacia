@@ -5,6 +5,7 @@ import { Administrador } from './entities/administrador.entity'
 import { CreateAdministradorDto } from './dto/create-administrador.dto';
 import { UpdateAdministradorDto } from './dto/update-administrador.dto';
 
+
 @Injectable()
 export class AdministradorService {
   constructor(

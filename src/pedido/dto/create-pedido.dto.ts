@@ -12,4 +12,11 @@ export class CreatePedidoDto {
 
     @IsNotEmpty()
     readonly medicamento: string;
+
+    @IsNotEmpty()
+    readonly id_fez_pedido: number;
+    
+    @IsNotEmpty()
+    readonly id_recebeu_pedido: number;
+    
 }

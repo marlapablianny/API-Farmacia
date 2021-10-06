@@ -11,5 +11,5 @@ export class CreateMedicamentoDto {
     readonly descricao: string;
 
     @IsNotEmpty()
-    readonly quantidade: string;
+    readonly quantidade: number;
 }

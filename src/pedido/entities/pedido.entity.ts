@@ -17,5 +17,11 @@ export class Pedido {
     @Column()
     medicamento: string;
 
+    @Column()
+    id_fez_pedido:  number;
+
+    @Column({nullable:true})
+    id_recebeu_pedido: number;
+
 
 }

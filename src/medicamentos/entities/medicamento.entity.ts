@@ -15,6 +15,6 @@ export class Medicamento {
     descricao: string;
 
     @Column()
-    quantidade: string;
+    quantidade: number;
 
 }

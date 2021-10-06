@@ -6,6 +6,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { validate } from 'class-validator';
 import { ClientesService } from 'src/clientes/clientes.service';
 import { MedicamentosService } from 'src/medicamentos/medicamentos.service';
+import { UpdateMedicamentoDto } from 'src/medicamentos/dto/update-medicamento.dto';
 
 @Controller('pedido')
 export class PedidoController {
@@ -18,10 +19,7 @@ export class PedidoController {
   @Post(':id')
   async create(@Body() createPedidoDto: CreatePedidoDto, @Request() req: any, @Param('id') id) {
     const usuario = await this.clientesService.findOneByEmail(req.user.email);
-    console.log(usuario);
     const medicamento = await this.medicamentosService.findOne(id);
-    console.log(medicamento);
-
     if (!medicamento) { 
       throw new NotFoundException('Medicamento não encontrado');
     }
@@ -29,10 +27,9 @@ export class PedidoController {
     if (!medicamento.quantidade) {
       throw new BadRequestException('Medicamento indisponível')
     }
-
-    return this.pedidoService.create({nome: usuario.nome, endereco: usuario.endereco, telefone: usuario.telefone, medicamento: medicamento.nome_medicamento});
-    //quantidade =  medicamento.quantidade-1
-
+    const quantidate = medicamento.quantidade - 1;
+    await this.medicamentosService.update(id, {...medicamento, quantidade: quantidate})
+    await this.pedidoService.create({nome: usuario.nome, endereco: usuario.endereco, telefone: usuario.telefone, medicamento: medicamento.nome_medicamento, id_fez_pedido: usuario.id, id_recebeu_pedido: null});
   }
 
   @UseGuards(JwtAuthGuard)
@@ -55,5 +52,12 @@ export class PedidoController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.pedidoService.remove(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('recebido/:id')
+  async receberpedido(@Request() req: any, @Param('id') id){
+    const usuario = await this.clientesService.findOneByEmail(req.user.email);
+    return this.pedidoService.Pedidorecebido(id, usuario);
   }
 }
