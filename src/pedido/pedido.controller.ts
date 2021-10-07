@@ -61,6 +61,12 @@ export class PedidoController {
   @UseGuards(JwtAuthGuard)
   @Patch('recebido/:id')
   async receberpedido(@Request() req: any, @Param('id') id){
-    return this.pedidoService.pedidoRecebido(id, req.user.id);
+    const pedido = await this.pedidoService.findOne({
+      where: { id, idCliente: req.user.id, recebido: false}
+    });
+    if (!pedido) {
+      throw new NotFoundException('Pedido não encontrado');
+    }
+    return this.pedidoService.pedidoRecebido(pedido.id, req.user.id);
   }
 }

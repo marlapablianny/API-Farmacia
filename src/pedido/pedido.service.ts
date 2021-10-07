@@ -20,8 +20,8 @@ export class PedidoService {
     return this.pedidoRepository.find();
   }
 
-  findOne(id: number): Promise<Pedido> {
-    return this.pedidoRepository.findOne(id);
+  findOne(criterio: any): Promise<Pedido> {
+    return this.pedidoRepository.findOne(criterio);
   }
 
   async update(id: number, updatePedidoDto: UpdatePedidoDto) {
@@ -33,9 +33,6 @@ export class PedidoService {
   }
 
   async pedidoRecebido(idPedido, idCliente: number){
-    const pedido = await this.pedidoRepository.findOne({
-      where: { idCliente, recebido: false}
-    })
-    return this.update(pedido.id, {recebido: true})
+    return this.update(idPedido, {recebido: true})
   }
 }
