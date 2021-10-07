@@ -12,7 +12,7 @@ export class PedidoService {
     private pedidoRepository: Repository<Pedido>,
   ){}
 
-  create(createPedidoDto: CreatePedidoDto) {
+  create( createPedidoDto: CreatePedidoDto) {
     return this.pedidoRepository.save(createPedidoDto);
   }
 
@@ -20,21 +20,22 @@ export class PedidoService {
     return this.pedidoRepository.find();
   }
 
-  findOne(id: string): Promise<Pedido> {
+  findOne(id: number): Promise<Pedido> {
     return this.pedidoRepository.findOne(id);
   }
 
-  async update(id: string, updatePedidoDto: UpdatePedidoDto) {
+  async update(id: number, updatePedidoDto: UpdatePedidoDto) {
     await this.pedidoRepository.update(id, updatePedidoDto);
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     await this.pedidoRepository.delete(id);
-    
   }
 
-  async Pedidorecebido(id, usuario){
-    return this.pedidoRepository.update({id: id,id_recebeu_pedido:null},{id_recebeu_pedido:usuario.id} )
-
+  async pedidoRecebido(idPedido, idCliente: number){
+    const pedido = await this.pedidoRepository.findOne({
+      where: { idCliente, recebido: false}
+    })
+    return this.update(pedido.id, {recebido: true})
   }
 }

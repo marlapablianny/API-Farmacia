@@ -20,7 +20,7 @@ constructor(
     return this.medicamentosRepository.find();
   }
 
-  findOne(id: string): Promise<Medicamento> {
+  findOne(id: number): Promise<Medicamento> {
     return this.medicamentosRepository.findOne(id);
   }
 

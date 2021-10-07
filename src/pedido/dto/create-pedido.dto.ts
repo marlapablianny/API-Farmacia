@@ -1,22 +1,11 @@
 import { IsNotEmpty } from "class-validator";
+import { Cliente } from "src/clientes/entities/cliente.entity";
+import { Medicamento } from "src/medicamentos/entities/medicamento.entity";
 
 export class CreatePedidoDto {
     @IsNotEmpty()
-    readonly nome: string;
+    readonly cliente: Cliente;
     
     @IsNotEmpty()
-    readonly endereco: string;
-    
-    @IsNotEmpty()
-    readonly telefone: string;
-
-    @IsNotEmpty()
-    readonly medicamento: string;
-
-    @IsNotEmpty()
-    readonly id_fez_pedido: number;
-    
-    @IsNotEmpty()
-    readonly id_recebeu_pedido: number;
-    
+    readonly medicamento: Medicamento;
 }

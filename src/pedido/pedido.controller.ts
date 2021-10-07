@@ -7,6 +7,7 @@ import { validate } from 'class-validator';
 import { ClientesService } from 'src/clientes/clientes.service';
 import { MedicamentosService } from 'src/medicamentos/medicamentos.service';
 import { UpdateMedicamentoDto } from 'src/medicamentos/dto/update-medicamento.dto';
+import { CreateMedicamentoDto } from 'src/medicamentos/dto/create-medicamento.dto';
 
 @Controller('pedido')
 export class PedidoController {
@@ -16,10 +17,12 @@ export class PedidoController {
     private readonly medicamentosService: MedicamentosService) {}
   
   @UseGuards(JwtAuthGuard)
-  @Post(':id')
-  async create(@Body() createPedidoDto: CreatePedidoDto, @Request() req: any, @Param('id') id) {
-    const usuario = await this.clientesService.findOneByEmail(req.user.email);
-    const medicamento = await this.medicamentosService.findOne(id);
+  @Post()
+  async create(@Body() {idMedicamento}: any, @Request() request: any) {
+    const idCliente = request.user.id
+    const cliente = await this.clientesService.findOne(idCliente);
+    const medicamento = await this.medicamentosService.findOne(idMedicamento);
+    
     if (!medicamento) { 
       throw new NotFoundException('Medicamento não encontrado');
     }
@@ -27,9 +30,10 @@ export class PedidoController {
     if (!medicamento.quantidade) {
       throw new BadRequestException('Medicamento indisponível')
     }
+    
     const quantidate = medicamento.quantidade - 1;
-    await this.medicamentosService.update(id, {...medicamento, quantidade: quantidate})
-    await this.pedidoService.create({nome: usuario.nome, endereco: usuario.endereco, telefone: usuario.telefone, medicamento: medicamento.nome_medicamento, id_fez_pedido: usuario.id, id_recebeu_pedido: null});
+    await this.medicamentosService.update(medicamento.id, {...medicamento, quantidade: quantidate})
+    await this.pedidoService.create({cliente, medicamento});
   }
 
   @UseGuards(JwtAuthGuard)
@@ -45,19 +49,18 @@ export class PedidoController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePedidoDto: UpdatePedidoDto) {
+  update(@Param('id') id: number, @Body() updatePedidoDto: UpdatePedidoDto) {
     return this.pedidoService.update(id, updatePedidoDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.pedidoService.remove(id);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch('recebido/:id')
   async receberpedido(@Request() req: any, @Param('id') id){
-    const usuario = await this.clientesService.findOneByEmail(req.user.email);
-    return this.pedidoService.Pedidorecebido(id, usuario);
+    return this.pedidoService.pedidoRecebido(id, req.user.id);
   }
 }

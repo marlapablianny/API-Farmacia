@@ -20,7 +20,7 @@ export class ClientesService {
     return this.clientesRepository.find();
   }
 
-  findOne(id: string): Promise<Cliente>{
+  findOne(id: number): Promise<Cliente>{
     return this.clientesRepository.findOne(id);
   }
 

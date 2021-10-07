@@ -1,27 +1,29 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Cliente } from "src/clientes/entities/cliente.entity";
+import { Medicamento } from "src/medicamentos/entities/medicamento.entity";
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, CreateDateColumn } from "typeorm";
 
 @Entity()
 export class Pedido {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    nome: string;
+    @OneToOne(() => Cliente)
+    @JoinColumn({ name: 'cliente_id'})
+    cliente: Cliente;
+    
+    @Column({ name: 'cliente_id' })
+    idCliente: number;
+    
+    @OneToOne(() => Medicamento)
+    @JoinColumn({ name: 'medicamento_id' })
+    medicamento: Medicamento;
 
-    @Column()
-    endereco: string;
+    @Column({ name: 'medicamento_id' })
+    idMedicamento: number;
 
-    @Column()
-    telefone: string;
+    @CreateDateColumn()
+    data: Date;
 
-    @Column()
-    medicamento: string;
-
-    @Column()
-    id_fez_pedido:  number;
-
-    @Column({nullable:true})
-    id_recebeu_pedido: number;
-
-
+    @Column({default: false})
+    recebido: boolean;
 }

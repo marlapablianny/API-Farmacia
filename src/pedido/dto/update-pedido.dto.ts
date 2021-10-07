@@ -1,12 +1,6 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreatePedidoDto } from './create-pedido.dto';
+import { IsNotEmpty } from 'class-validator';
 
-export class UpdatePedidoDto extends PartialType(CreatePedidoDto) {
-    readonly nome: string;
-    readonly endereço: string;
-    readonly telefone: string;
-    readonly medicamento: string;
-    readonly id_fez_pedido: number;
-    readonly id_recebeu_pedido: number;
-
+export class UpdatePedidoDto {
+    @IsNotEmpty()
+    readonly recebido: boolean;
 }
