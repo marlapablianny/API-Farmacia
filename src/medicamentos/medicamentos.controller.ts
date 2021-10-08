@@ -8,31 +8,31 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class MedicamentosController {
   constructor(private readonly medicamentosService: MedicamentosService) {}
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createMedicamentoDto: CreateMedicamentoDto) {
     return this.medicamentosService.create(createMedicamentoDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.medicamentosService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') params) {
     return this.medicamentosService.findOne(params.id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateMedicamentoDto: UpdateMedicamentoDto) {
     return this.medicamentosService.update(+id, updateMedicamentoDto);
   }
   
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.medicamentosService.remove(id);
